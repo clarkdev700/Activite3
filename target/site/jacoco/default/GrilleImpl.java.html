@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GrilleImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Activite 3</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">GrilleImpl.java</span></div><h1>GrilleImpl.java</h1><pre class="source lang-java linenums">/**
+ * GrilleImpl.
+ * @author GBIKPI BENISSANH Date E.
+ */
+public class GrilleImpl implements Grille {
+    /**
+     * tableau des valeurs.
+     */
+    private final char[][] magrille;
+
+    /**
+     * dimension de la grille.
+     */
+    private final int dimension;
+
+    /**
+     * borne maximale.
+     */
+<span class="fc" id="L19">    private final int bornemax = 8;</span>
+    /**
+     * Constructeur de la classe GrilleImpl.
+     * @param x est un entier designat la taille de la grille à creer
+     */
+<span class="fc" id="L24">    public GrilleImpl(final int x) {</span>
+<span class="fc" id="L25">        this.dimension = x;</span>
+<span class="fc" id="L26">        this.magrille = new char[x][x];</span>
+<span class="fc" id="L27">        initGrille();</span>
+<span class="fc" id="L28">    }</span>
+
+    /**
+     * retourne la dimension du la grille.
+     * @return la dimension
+     */
+    public int getDimension() {
+<span class="fc" id="L35">        return this.dimension;</span>
+    }
+
+    /**
+     * affecte une valeur à la cellule definie.
+     * @param x ligne de la grille
+     * @param y colonne de la grille
+     * @param value valeur de la cellule
+     * @throws HorsBornesException
+     * @throws CaractereInterditException
+     * @throws ValeurImpossibleException
+     */
+    public void setValue(final int x, final int y, final char value)
+            throws HorsBornesException,
+            CaractereInterditException, ValeurImpossibleException {
+<span class="pc bpc" id="L50" title="1 of 4 branches missed.">       if (x &gt; bornemax || y &gt; bornemax) {</span>
+<span class="fc" id="L51">           throw</span>
+                new HorsBornesException(&quot;Les positions x &quot;
+                        + &quot;ou y sont hors bornes&quot;);
+       }
+
+<span class="fc bfc" id="L56" title="All 2 branches covered.">       if (!checkValue(value)) {</span>
+<span class="fc" id="L57">         throw</span>
+            new CaractereInterditException(value + &quot; n'est pas &quot;
+                    + &quot;un caractere autorise&quot;);
+       }
+
+<span class="fc" id="L62">       boolean ligneOk = verifieLigne(x, value);</span>
+<span class="fc" id="L63">       boolean colonneOk = verifieColonne(y, value);</span>
+
+<span class="pc bpc" id="L65" title="2 of 4 branches missed.">        if (ligneOk &amp;&amp; colonneOk) {</span>
+<span class="fc" id="L66">           throw</span>
+               new ValeurImpossibleException(value + &quot; est &quot;
+                       + &quot;une valeur interdite&quot;);
+        }
+
+<span class="nc" id="L71">        this.magrille[x][y] = value;</span>
+<span class="nc" id="L72">    }</span>
+
+    /**
+     * retourne la valeur de la cellule.
+     * @param x ligne de la grille
+     * @param y colonne de la grille
+     * @return la valeur de la cellule
+     * @throws HorsBornesException
+     */
+    public char getValue(final int x, final int y) throws HorsBornesException {
+<span class="pc bpc" id="L82" title="1 of 4 branches missed.">       if (x &gt; bornemax || y &gt; bornemax) {</span>
+<span class="fc" id="L83">           throw</span>
+            new HorsBornesException(&quot;Les positions x ou &quot;
+                    + &quot;y sont hors bornes&quot;);
+       }
+
+<span class="nc" id="L88">      return this.magrille[x][y];</span>
+    }
+
+    /**
+     * @return true si pas de vide sinon false.
+     */
+    public boolean complete() {
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">      for (int i = 0; i &lt; this.dimension; i++) {</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">          for (int j = 0; j &lt; this.dimension; j++) {</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">            if (this.magrille[i][j] == EMPTY) {</span>
+<span class="fc" id="L98">              return false;</span>
+            }
+          }
+      }
+<span class="nc" id="L102">      return true;</span>
+    }
+
+    /**
+     * Test si une valeur est possible dans la grille par rapport a ce qu'elle
+     * contient deja.
+     * @param x ligne de la grille
+     * @param y colonne de la grille
+     * @param value valeur à inserer
+     * @return true si la valeur est possible sinon false
+     * @throws CaractereInterditException
+     * @throws HorsBornesException
+     */
+    public boolean possible(final int x, final int y, final char value)
+            throws CaractereInterditException,
+            HorsBornesException {
+<span class="pc bpc" id="L118" title="1 of 4 branches missed.">        if (x &gt; bornemax || y &gt; bornemax) {</span>
+<span class="fc" id="L119">           throw</span>
+              new HorsBornesException(&quot;Les positions x &quot;
+                           + &quot;ou y sont hors bornes&quot;);
+       }
+
+<span class="fc bfc" id="L124" title="All 2 branches covered.">       if (!checkValue(value)) {</span>
+<span class="fc" id="L125">         throw</span>
+            new CaractereInterditException(value + &quot; n'est &quot;
+                    + &quot;pas un caractere autorise&quot;);
+       }
+
+<span class="fc" id="L130">        boolean ligneOk = verifieLigne(x, value);</span>
+<span class="fc" id="L131">        boolean colonneOk = verifieColonne(y, value);</span>
+<span class="pc bpc" id="L132" title="2 of 4 branches missed.">        return ligneOk &amp;&amp; colonneOk;</span>
+    }
+
+    /**
+     * initialise la grille.
+     */
+    private void initGrille() {
+     //
+<span class="fc bfc" id="L140" title="All 2 branches covered.">     for (int i = 0; i &lt; this.dimension; i++) {</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">         for (int j = 0; j &lt; this.dimension; j++) {</span>
+<span class="fc" id="L142">           this.magrille[i][j] = EMPTY;</span>
+         }
+     }
+<span class="fc" id="L145">    }</span>
+
+    /**
+     * verifie les valeurs sur la colonne.
+     * @param y colonne definie
+     * @param value valeur à rechercher
+     * @return un bolean
+     */
+   private boolean verifieColonne(final int y, final char value) {
+<span class="fc" id="L154">       boolean colonneOk = true;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">       for (int i = 0; i &lt; this.dimension; i++) {</span>
+       //
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">       if (this.magrille[i][y] == value) {</span>
+<span class="nc" id="L158">           colonneOk = false;</span>
+<span class="nc" id="L159">           break;</span>
+       }
+    }
+<span class="fc" id="L162">    return colonneOk;</span>
+   }
+
+   /**
+    * verifie la valeur sur la ligne.
+    * @param x valeur de la ligne
+    * @param value valeur à comparer
+    * @return un bolean
+    */
+   private boolean verifieLigne(final int x, final char value) {
+<span class="fc" id="L172">    boolean ligneOk = true;</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">    for (int j = 0; j &lt; this.dimension; j++) {</span>
+       //
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">       if (this.magrille[x][j] == value) {</span>
+<span class="nc" id="L176">           ligneOk = false;</span>
+<span class="nc" id="L177">           break;</span>
+       }
+    }
+<span class="fc" id="L180">    return ligneOk;</span>
+   }
+
+   /**
+    * retourne true si la valeur existe dans Possible sinon false.
+    * @param value valeur à rechercher
+    * @return un bolleen
+    */
+    private boolean checkValue(final char value) {
+<span class="fc" id="L189">      boolean found = false;</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">      for (char c : POSSIBLE) {</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        if (c == value) {</span>
+<span class="fc" id="L192">          found = true;</span>
+<span class="fc" id="L193">          break;</span>
+        }
+      }
+<span class="fc" id="L196">      return found;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
