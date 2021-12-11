@@ -31,20 +31,14 @@ public class GrilleImpl implements Grille {
      * retourne la dimension du la grille.
      * @return la dimension
      */
-    public int getDimension() {
+    public final int getDimension() {
         return this.dimension;
     }
 
     /**
-     * affecte une valeur à la cellule definie.
-     * @param x ligne de la grille
-     * @param y colonne de la grille
-     * @param value valeur de la cellule
-     * @throws HorsBornesException
-     * @throws CaractereInterditException
-     * @throws ValeurImpossibleException
+     * {@inheritDoc}.
      */
-    public void setValue(final int x, final int y, final char value)
+    public final void setValue(final int x, final int y, final char value)
             throws HorsBornesException,
             CaractereInterditException, ValeurImpossibleException {
        if (x > bornemax || y > bornemax) {
@@ -72,13 +66,10 @@ public class GrilleImpl implements Grille {
     }
 
     /**
-     * retourne la valeur de la cellule.
-     * @param x ligne de la grille
-     * @param y colonne de la grille
-     * @return la valeur de la cellule
-     * @throws HorsBornesException
+     * {@inheritDoc} .
      */
-    public char getValue(final int x, final int y) throws HorsBornesException {
+    public final char getValue(final int x, final int y)
+      throws HorsBornesException {
        if (x > bornemax || y > bornemax) {
            throw
             new HorsBornesException("Les positions x ou "
@@ -91,7 +82,7 @@ public class GrilleImpl implements Grille {
     /**
      * @return true si pas de vide sinon false.
      */
-    public boolean complete() {
+    public final boolean complete() {
       for (int i = 0; i < this.dimension; i++) {
           for (int j = 0; j < this.dimension; j++) {
             if (this.magrille[i][j] == EMPTY) {
@@ -103,16 +94,9 @@ public class GrilleImpl implements Grille {
     }
 
     /**
-     * Test si une valeur est possible dans la grille par rapport a ce qu'elle
-     * contient deja.
-     * @param x ligne de la grille
-     * @param y colonne de la grille
-     * @param value valeur à inserer
-     * @return true si la valeur est possible sinon false
-     * @throws CaractereInterditException
-     * @throws HorsBornesException
+     * {@inheritDoc} .
      */
-    public boolean possible(final int x, final int y, final char value)
+    public final boolean possible(final int x, final int y, final char value)
             throws CaractereInterditException,
             HorsBornesException {
         if (x > bornemax || y > bornemax) {

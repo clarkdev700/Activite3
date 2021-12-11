@@ -31,105 +31,89 @@ public class GrilleImpl implements Grille {
      * retourne la dimension du la grille.
      * @return la dimension
      */
-    public int getDimension() {
+    public final int getDimension() {
 <span class="fc" id="L35">        return this.dimension;</span>
     }
 
     /**
-     * affecte une valeur à la cellule definie.
-     * @param x ligne de la grille
-     * @param y colonne de la grille
-     * @param value valeur de la cellule
-     * @throws HorsBornesException
-     * @throws CaractereInterditException
-     * @throws ValeurImpossibleException
+     * {@inheritDoc}.
      */
-    public void setValue(final int x, final int y, final char value)
+    public final void setValue(final int x, final int y, final char value)
             throws HorsBornesException,
             CaractereInterditException, ValeurImpossibleException {
-<span class="pc bpc" id="L50" title="1 of 4 branches missed.">       if (x &gt; bornemax || y &gt; bornemax) {</span>
-<span class="fc" id="L51">           throw</span>
+<span class="pc bpc" id="L44" title="1 of 4 branches missed.">       if (x &gt; bornemax || y &gt; bornemax) {</span>
+<span class="fc" id="L45">           throw</span>
                 new HorsBornesException(&quot;Les positions x &quot;
                         + &quot;ou y sont hors bornes&quot;);
        }
 
-<span class="fc bfc" id="L56" title="All 2 branches covered.">       if (!checkValue(value)) {</span>
-<span class="fc" id="L57">         throw</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">       if (!checkValue(value)) {</span>
+<span class="fc" id="L51">         throw</span>
             new CaractereInterditException(value + &quot; n'est pas &quot;
                     + &quot;un caractere autorise&quot;);
        }
 
-<span class="fc" id="L62">       boolean ligneOk = verifieLigne(x, value);</span>
-<span class="fc" id="L63">       boolean colonneOk = verifieColonne(y, value);</span>
+<span class="fc" id="L56">       boolean ligneOk = verifieLigne(x, value);</span>
+<span class="fc" id="L57">       boolean colonneOk = verifieColonne(y, value);</span>
 
-<span class="pc bpc" id="L65" title="2 of 4 branches missed.">        if (ligneOk &amp;&amp; colonneOk) {</span>
-<span class="fc" id="L66">           throw</span>
+<span class="pc bpc" id="L59" title="2 of 4 branches missed.">        if (ligneOk &amp;&amp; colonneOk) {</span>
+<span class="fc" id="L60">           throw</span>
                new ValeurImpossibleException(value + &quot; est &quot;
                        + &quot;une valeur interdite&quot;);
         }
 
-<span class="nc" id="L71">        this.magrille[x][y] = value;</span>
-<span class="nc" id="L72">    }</span>
+<span class="nc" id="L65">        this.magrille[x][y] = value;</span>
+<span class="nc" id="L66">    }</span>
 
     /**
-     * retourne la valeur de la cellule.
-     * @param x ligne de la grille
-     * @param y colonne de la grille
-     * @return la valeur de la cellule
-     * @throws HorsBornesException
+     * {@inheritDoc} .
      */
-    public char getValue(final int x, final int y) throws HorsBornesException {
-<span class="pc bpc" id="L82" title="1 of 4 branches missed.">       if (x &gt; bornemax || y &gt; bornemax) {</span>
-<span class="fc" id="L83">           throw</span>
+    public final char getValue(final int x, final int y)
+      throws HorsBornesException {
+<span class="pc bpc" id="L73" title="1 of 4 branches missed.">       if (x &gt; bornemax || y &gt; bornemax) {</span>
+<span class="fc" id="L74">           throw</span>
             new HorsBornesException(&quot;Les positions x ou &quot;
                     + &quot;y sont hors bornes&quot;);
        }
 
-<span class="nc" id="L88">      return this.magrille[x][y];</span>
+<span class="nc" id="L79">      return this.magrille[x][y];</span>
     }
 
     /**
      * @return true si pas de vide sinon false.
      */
-    public boolean complete() {
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">      for (int i = 0; i &lt; this.dimension; i++) {</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">          for (int j = 0; j &lt; this.dimension; j++) {</span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">            if (this.magrille[i][j] == EMPTY) {</span>
-<span class="fc" id="L98">              return false;</span>
+    public final boolean complete() {
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">      for (int i = 0; i &lt; this.dimension; i++) {</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">          for (int j = 0; j &lt; this.dimension; j++) {</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">            if (this.magrille[i][j] == EMPTY) {</span>
+<span class="fc" id="L89">              return false;</span>
             }
           }
       }
-<span class="nc" id="L102">      return true;</span>
+<span class="nc" id="L93">      return true;</span>
     }
 
     /**
-     * Test si une valeur est possible dans la grille par rapport a ce qu'elle
-     * contient deja.
-     * @param x ligne de la grille
-     * @param y colonne de la grille
-     * @param value valeur à inserer
-     * @return true si la valeur est possible sinon false
-     * @throws CaractereInterditException
-     * @throws HorsBornesException
+     * {@inheritDoc} .
      */
-    public boolean possible(final int x, final int y, final char value)
+    public final boolean possible(final int x, final int y, final char value)
             throws CaractereInterditException,
             HorsBornesException {
-<span class="pc bpc" id="L118" title="1 of 4 branches missed.">        if (x &gt; bornemax || y &gt; bornemax) {</span>
-<span class="fc" id="L119">           throw</span>
+<span class="pc bpc" id="L102" title="1 of 4 branches missed.">        if (x &gt; bornemax || y &gt; bornemax) {</span>
+<span class="fc" id="L103">           throw</span>
               new HorsBornesException(&quot;Les positions x &quot;
                            + &quot;ou y sont hors bornes&quot;);
        }
 
-<span class="fc bfc" id="L124" title="All 2 branches covered.">       if (!checkValue(value)) {</span>
-<span class="fc" id="L125">         throw</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">       if (!checkValue(value)) {</span>
+<span class="fc" id="L109">         throw</span>
             new CaractereInterditException(value + &quot; n'est &quot;
                     + &quot;pas un caractere autorise&quot;);
        }
 
-<span class="fc" id="L130">        boolean ligneOk = verifieLigne(x, value);</span>
-<span class="fc" id="L131">        boolean colonneOk = verifieColonne(y, value);</span>
-<span class="pc bpc" id="L132" title="2 of 4 branches missed.">        return ligneOk &amp;&amp; colonneOk;</span>
+<span class="fc" id="L114">        boolean ligneOk = verifieLigne(x, value);</span>
+<span class="fc" id="L115">        boolean colonneOk = verifieColonne(y, value);</span>
+<span class="pc bpc" id="L116" title="2 of 4 branches missed.">        return ligneOk &amp;&amp; colonneOk;</span>
     }
 
     /**
@@ -137,12 +121,12 @@ public class GrilleImpl implements Grille {
      */
     private void initGrille() {
      //
-<span class="fc bfc" id="L140" title="All 2 branches covered.">     for (int i = 0; i &lt; this.dimension; i++) {</span>
-<span class="fc bfc" id="L141" title="All 2 branches covered.">         for (int j = 0; j &lt; this.dimension; j++) {</span>
-<span class="fc" id="L142">           this.magrille[i][j] = EMPTY;</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">     for (int i = 0; i &lt; this.dimension; i++) {</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">         for (int j = 0; j &lt; this.dimension; j++) {</span>
+<span class="fc" id="L126">           this.magrille[i][j] = EMPTY;</span>
          }
      }
-<span class="fc" id="L145">    }</span>
+<span class="fc" id="L129">    }</span>
 
     /**
      * verifie les valeurs sur la colonne.
@@ -151,15 +135,15 @@ public class GrilleImpl implements Grille {
      * @return un bolean
      */
    private boolean verifieColonne(final int y, final char value) {
-<span class="fc" id="L154">       boolean colonneOk = true;</span>
-<span class="fc bfc" id="L155" title="All 2 branches covered.">       for (int i = 0; i &lt; this.dimension; i++) {</span>
+<span class="fc" id="L138">       boolean colonneOk = true;</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">       for (int i = 0; i &lt; this.dimension; i++) {</span>
        //
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">       if (this.magrille[i][y] == value) {</span>
-<span class="nc" id="L158">           colonneOk = false;</span>
-<span class="nc" id="L159">           break;</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">       if (this.magrille[i][y] == value) {</span>
+<span class="nc" id="L142">           colonneOk = false;</span>
+<span class="nc" id="L143">           break;</span>
        }
     }
-<span class="fc" id="L162">    return colonneOk;</span>
+<span class="fc" id="L146">    return colonneOk;</span>
    }
 
    /**
@@ -169,15 +153,15 @@ public class GrilleImpl implements Grille {
     * @return un bolean
     */
    private boolean verifieLigne(final int x, final char value) {
-<span class="fc" id="L172">    boolean ligneOk = true;</span>
-<span class="fc bfc" id="L173" title="All 2 branches covered.">    for (int j = 0; j &lt; this.dimension; j++) {</span>
+<span class="fc" id="L156">    boolean ligneOk = true;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">    for (int j = 0; j &lt; this.dimension; j++) {</span>
        //
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">       if (this.magrille[x][j] == value) {</span>
-<span class="nc" id="L176">           ligneOk = false;</span>
-<span class="nc" id="L177">           break;</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">       if (this.magrille[x][j] == value) {</span>
+<span class="nc" id="L160">           ligneOk = false;</span>
+<span class="nc" id="L161">           break;</span>
        }
     }
-<span class="fc" id="L180">    return ligneOk;</span>
+<span class="fc" id="L164">    return ligneOk;</span>
    }
 
    /**
@@ -186,14 +170,14 @@ public class GrilleImpl implements Grille {
     * @return un bolleen
     */
     private boolean checkValue(final char value) {
-<span class="fc" id="L189">      boolean found = false;</span>
-<span class="fc bfc" id="L190" title="All 2 branches covered.">      for (char c : POSSIBLE) {</span>
-<span class="fc bfc" id="L191" title="All 2 branches covered.">        if (c == value) {</span>
-<span class="fc" id="L192">          found = true;</span>
-<span class="fc" id="L193">          break;</span>
+<span class="fc" id="L173">      boolean found = false;</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">      for (char c : POSSIBLE) {</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">        if (c == value) {</span>
+<span class="fc" id="L176">          found = true;</span>
+<span class="fc" id="L177">          break;</span>
         }
       }
-<span class="fc" id="L196">      return found;</span>
+<span class="fc" id="L180">      return found;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
