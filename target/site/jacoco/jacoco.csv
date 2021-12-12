@@ -1,6 +1,0 @@
-GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-Activite 3,default,CaractereInterditException,0,4,0,0,0,2,0,1,0,1
-Activite 3,default,GrilleImpl,19,384,8,52,5,74,8,35,0,13
-Activite 3,default,Grille,0,104,0,0,0,1,0,1,0,1
-Activite 3,default,HorsBornesException,0,4,0,0,0,2,0,1,0,1
-Activite 3,default,ValeurImpossibleException,0,4,0,0,0,2,0,1,0,1
