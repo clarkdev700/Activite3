@@ -1,4 +1,12 @@
 -------------------------------------------------------------------------------
 Test set: GrilleImplTest
 -------------------------------------------------------------------------------
-Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.106 s - in GrilleImplTest
+Tests run: 13, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.452 s <<< FAILURE! - in GrilleImplTest
+testGetValue  Time elapsed: 0.002 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <2> but was: <50>
+	at GrilleImplTest.testGetValue(GrilleImplTest.java:116)
+
+testSetValue  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <2> but was: <50>
+	at GrilleImplTest.testSetValue(GrilleImplTest.java:29)
+
